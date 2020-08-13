@@ -6,12 +6,15 @@ class Patient(models.Model):
     """Model representing patient data in database"""
     name = models.CharField(max_length=255)
     surname = models.CharField(max_length=255)
-    height = models.IntegerField
-    weight = models.IntegerField
+    sex = models.CharField(max_length=6, choices=[('male', 'male'), ('female', 'female'), ('other', 'other')], default='male')
+    phone = models.CharField(max_length=20, default='0')
+    height = models.FloatField(default=0)
+    weight = models.FloatField(default=0)
+    bmi = models.FloatField(default=0)
     doctor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
 
     def __str__(self):
-        return self.name + '' + self.surname
+        return f'{self.name} {self.surname}'
