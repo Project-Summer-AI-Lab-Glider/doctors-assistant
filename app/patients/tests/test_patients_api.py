@@ -5,11 +5,11 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from app.core.models import Patient
+from core.models import Patient
 
-from app.patients.serializers import PatientSerializer
+from patients.serializers import PatientSerializer
 
-PATIENTS_URL = reverse('patients')
+PATIENTS_URL = "/api/bills/"
 
 
 class PublicPatientsApiTests(TestCase):
@@ -33,7 +33,7 @@ class PrivatePatientsApiTests(TestCase):
             'Test123'
         )
 
-        self.client = APIClient(        )
+        self.client = APIClient()
         self.client.force_authenticate(self.user)
 
     def test_retrive_patients(self):
@@ -51,11 +51,8 @@ class PrivatePatientsApiTests(TestCase):
 
     def test_patients_limited_to_doctor(self):
         """Test that patients returned are for the authenticated user"""
-        user2 = get_user_model().objects.create_user(
-            'test2@test.com',
-            'Test123'
-        )
-        Patient.objects.create(user=user2, name='Anna', surname='Kowalska')
+        user2 = get_user_model().objects.create_user(email='test2@test.com', password='Test123')
+        Patient.objects.create(doctor=user2, name='Anna', surname='Kowalska')
         patient = Patient.objects.create(doctor=self.user, name='Joanna', surname='Kowalska')
 
         res = self.client.get(PATIENTS_URL)

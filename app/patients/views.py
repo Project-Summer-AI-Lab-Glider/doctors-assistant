@@ -2,12 +2,13 @@ from rest_framework import viewsets, mixins
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from app.core.models import Patient
-from app.patients import serializers
+from core.models import Patient
+from patients import serializers
 
 
-class PatientViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+class PatientViewSet(viewsets.ModelViewSet):
     """Manage patients in database"""
+    queryset = Patient.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     queryset = Patient.objects.all()
