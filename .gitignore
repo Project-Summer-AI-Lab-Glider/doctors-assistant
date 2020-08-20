@@ -129,4 +129,6 @@ dmypy.json
 .pyre/
 
 # Migrations
-app.core.migrations/
+app.app.core.migrations/*
+
+.idea/*
