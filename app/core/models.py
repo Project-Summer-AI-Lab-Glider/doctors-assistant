@@ -50,6 +50,7 @@ class Patient(models.Model):
     height = models.FloatField(default=0)
     weight = models.FloatField(default=0)
     bmi = models.FloatField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
     doctor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
@@ -87,3 +88,14 @@ class PhisicalExamination(models.Model):
                           choices=[('normosteniczna', 'normosteniczna'), ('hyposteniczna', 'hyposteniczna'),
                                    ('hypersteniczna', 'hypersteniczna')])
 
+
+class PsychaitricAssesment(models.Model):
+    """
+    Model representing patient's psychiatric assesment.
+    NOTE: b1 - first aspect from the excel "Badanie psychiatryche"
+    """
+    patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
+    b1 = models.CharField(max_length=255)
+    b2 = models.CharField(max_length=255)
+    b3 = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
