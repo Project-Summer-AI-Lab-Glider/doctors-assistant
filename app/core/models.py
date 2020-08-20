@@ -36,9 +36,12 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
 
+    def __str__(self):
+        return self.email
+
 
 class Patient(models.Model):
-    """Model representing patient data in database"""
+    """Model representing patient basic personal data"""
     name = models.CharField(max_length=255)
     surname = models.CharField(max_length=255)
     sex = models.CharField(max_length=6, choices=[('male', 'male'), ('female', 'female'), ('other', 'other')],
@@ -54,3 +57,33 @@ class Patient(models.Model):
 
     def __str__(self):
         return f'{self.name} {self.surname}'
+
+
+class GeneralAnamnesis(models.Model):
+    """
+    Model representing patient's general anamnesis.
+    NOTE: w1 - first aspect from the excel "Wywiad".
+    """
+    patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
+    w1 = models.CharField(max_length=1000, default="do rozważenia dosłowny zapis pierwszych zdań pacjenta")
+    w2 = models.CharField(max_length=255)
+    w3a = models.CharField(max_length=255, choices=[('obecne', 'obecne'), ('nieobecne', 'nieobecne')])
+    w3b = models.CharField(max_length=255)
+    w4 = models.CharField(max_length=255)
+
+
+class PhisicalExamination(models.Model):
+    """
+    Model representing patient's phisical examination.
+    NOTE: p1 - first aspect from the excel "Badanie fizykalne".
+    """
+    patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
+    p1 = models.CharField(max_length=255, choices=[('stan dobry', 'stan dobry'), ('stan średni', 'stan średni'),
+                                                   ('stan ciężki', 'stan ciężki')])
+    p2 = models.CharField(max_length=255)
+    p3 = models.CharField(max_length=255)
+    p4 = models.CharField(max_length=255)
+    p5 = models.CharField(max_length=255,
+                          choices=[('normosteniczna', 'normosteniczna'), ('hyposteniczna', 'hyposteniczna'),
+                                   ('hypersteniczna', 'hypersteniczna')])
+

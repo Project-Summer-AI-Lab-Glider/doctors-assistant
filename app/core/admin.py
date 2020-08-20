@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext as _
 
-from .models import MyUser, Patient
+from .models import MyUser, Patient, GeneralAnamnesis, PhisicalExamination
 from django.contrib.auth.models import Group
 
 
@@ -28,4 +28,6 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(MyUser, UserAdmin)
 admin.site.register(Patient)
+admin.site.register(GeneralAnamnesis)
+admin.site.register(PhisicalExamination)
 admin.site.unregister(Group)

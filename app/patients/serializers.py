@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.models import Patient
+from core.models import Patient, GeneralAnamnesis, PhisicalExamination
 
 
 class PatientSerializer(serializers.ModelSerializer):
@@ -7,5 +7,23 @@ class PatientSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Patient
-        fields = ['id', 'name', 'surname']
-        read_only_fields = ('id', )
+        fields = '__all__'
+        read_only_fields = ('id',)
+
+
+class GeneralAnamnesisSerializer(serializers.ModelSerializer):
+    """Serializer for general amnesis object"""
+
+    class Meta:
+        model = GeneralAnamnesis
+        fields = '__all__'
+        read_only_fields = ('id',)
+
+
+class PhisicalExaminationSerializer(serializers.ModelSerializer):
+    """Serializer for phisical examination object"""
+
+    class Meta:
+        model = PhisicalExamination
+        fields = '__all__'
+        read_only_fields = ('id',)
